@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1048124489100",
+    "project_id": "ndtv-ltddnc",
+    "storage_bucket": "ndtv-ltddnc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048124489100:android:1d0373b76fbaed5a38eaa9",
+        "android_client_info": {
+          "package_name": "com.example.doanngocthanhvy_19dh110622"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048124489100-ojoi894d3megnndilt99td9132a9sb4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDULIqlsoqttxzORRHg_8-9j7ZkmHsYspE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048124489100-ojoi894d3megnndilt99td9132a9sb4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
