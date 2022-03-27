@@ -139,6 +139,7 @@ public class UsernamePasswordFragment extends Fragment {
                                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                Toast.makeText(getContext(),"Thành công", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getActivity(),SignInActivity.class));
                             }
 
