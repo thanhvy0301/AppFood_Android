@@ -1,9 +1,11 @@
 package com.example.doanngocthanhvy_19dh110622;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -13,8 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.location.Location;
 import android.location.LocationListener;
-
+import com.example.doanngocthanhvy_19dh110622.LocationServiceTask;
+import com.example.doanngocthanhvy_19dh110622.PermissionTask;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.api.Context;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,11 +90,11 @@ public class AddressFragment extends Fragment {
         tvMobile = view.findViewById(R.id.tvMobile);
         btnNext = view.findViewById(R.id.btnNext);
         btnNext.setOnClickListener(v -> {
-//            LatLng latLng = LocationServiceTask.getLatLngFromAddress(getContext(), tvAddress.getText().toString());
+            LatLng latLng = LocationServiceTask.getLatLngFromAddress(getContext(), tvAddress.getText().toString());
             Bundle bundle = new Bundle();
             bundle.putString("address", tvAddress.getText().toString());
-//            bundle.putDouble("latitude", latLng.latitude);
-//            bundle.putDouble("longitude", latLng.longitude);
+            bundle.putDouble("latitude", latLng.latitude);
+            bundle.putDouble("longitude", latLng.longitude);
             bundle.putString("mobile", tvMobile.getText().toString());
             bundle.putString("firstname", getArguments().getString("firstname"));
             bundle.putString("lastname", getArguments().getString("lastname"));
@@ -98,28 +104,31 @@ public class AddressFragment extends Fragment {
 
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (LocationServiceTask.isLocationServiceEnabled(getActivity())) {
-//            if (Permis.isLocationServiceAllowed(getActivity()))
-//                getLastLocation(getActivity());
-//            else
-//                PermissionTask.requestLocationServicePermissions(getActivity());
-//        } else {
-//            LocationServiceTask.displayEnableLocationServiceDialog(getActivity());
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (requestCode == PermissionTask.LOCATION_SERVICE_REQUEST_CODE && grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            getLastLocation(getActivity());
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-//
-//    public void getLastLocation(Context context) {
-//
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (LocationServiceTask.isLocationServiceEnabled(getActivity())) {
+            if (PermissionTask.isLocationServiceAllowed(getActivity()))
+                getLastLocation(getActivity());
+            else
+                PermissionTask.requestLocationServicePermissions(getActivity());
+        } else {
+            LocationServiceTask.displayEnableLocationServiceDialog(getActivity());
+        }
+    }
+
+    private void getLastLocation(FragmentActivity activity) {
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PermissionTask.LOCATION_SERVICE_REQUEST_CODE && grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getLastLocation(getActivity());
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void getLastLocation(Context context) {
+
+    }
 }
