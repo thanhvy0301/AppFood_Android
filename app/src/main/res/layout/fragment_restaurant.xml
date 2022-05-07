@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".RestaurantFragment">
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/mediumSpace"
+        android:id="@+id/rvRestaurants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

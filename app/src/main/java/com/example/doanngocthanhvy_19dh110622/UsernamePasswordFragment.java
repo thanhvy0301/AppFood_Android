@@ -24,6 +24,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +35,14 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class UsernamePasswordFragment extends Fragment {
+
     TextInputEditText tvEmail, tvPassword,tvConfirmPassword;
     Button btnRegister;
     FirebaseAuth fAuth;
     FirebaseDatabase fDatabase;
     String userID;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,12 +50,7 @@ public class UsernamePasswordFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
-
-    public UsernamePasswordFragment() {
-
-
-
+    private String mParam2;  public UsernamePasswordFragment() {
         // Required empty public constructor
     }
 
@@ -87,16 +87,19 @@ public class UsernamePasswordFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_username_password, container, false);
     }
+
     @Override
-    public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase fDatabase = FirebaseDatabase.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        fDatabase = FirebaseDatabase.getInstance();
         tvEmail = view.findViewById(R.id.tvEmail);
         tvPassword = view.findViewById(R.id.tvPassword);
         btnRegister = view.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(v -> {
+
+
             String address = getArguments().getString("address");
             String firstname = getArguments().getString("firstname");
             String lastname = getArguments().getString("lastname");
@@ -113,6 +116,7 @@ public class UsernamePasswordFragment extends Fragment {
                             if(task.isComplete()){
                                 userID = fAuth.getCurrentUser().getUid();
                                 DatabaseReference databaseReference = fDatabase.getReference();
+
                                 Map<String,Object> user = new HashMap<>();
                                 user.put("firstname",firstname);
                                 user.put("lastname",lastname);
@@ -125,32 +129,31 @@ public class UsernamePasswordFragment extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                //Toast.makeText(getContext(), "Successfull", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(getContext(), SignUpActivity.class);
+                                                Toast.makeText(getContext(), "OKE", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getContext(), SignInActivity.class);
                                                 intent.putExtra("email", email);
                                                 getActivity().setResult(Activity.RESULT_OK, intent);
                                                 getActivity().finish();
-
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
                                             }
                                         });
-                                Toast.makeText(getContext(),"Thành công", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getActivity(),SignInActivity.class));
+
                             }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
-
                     });
 
-            }
+        });}}
 
-        );
-
-    }
-
-}

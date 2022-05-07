@@ -1,52 +1,89 @@
 package com.example.doanngocthanhvy_19dh110622;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInActivity extends AppCompatActivity {
-    Button btnSignIn, btnSignUp;
-    TextInputEditText email, password;
+
+    Button buttonSignUp,buttonSignIn;
+    EditText editTextEmail,editTextPassword;
+    FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        TextView mEmail = findViewById(R.id.email);
-        TextView mPassword = findViewById(R.id.password);
-        btnSignIn = findViewById(R.id.btnSignIn);
-        btnSignUp = findViewById(R.id.btnSignUp);
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
+        //getSupportActionBar().hide();
+        buttonSignUp=findViewById(R.id.btnSignUp);
+        buttonSignIn=findViewById(R.id.btnSignIn);
+        editTextEmail=findViewById(R.id.email);
+        editTextPassword=findViewById(R.id.password);
 
-                if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Require");
-                    return;
+        firebaseAuth=FirebaseAuth.getInstance();
+        Intent i=getIntent();
+
+
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                boolean test=true;
+                if (editTextEmail.getText().toString().isEmpty())
+                {
+                    editTextEmail.setError("Vui lòng nhập dữ liệu!!!");
+                    test=false;
                 }
-                if(TextUtils.isEmpty(password)){
-                    mPassword.setError("Require");
-                    return;
+                if (editTextPassword.getText().toString().isEmpty())
+                {
+                    editTextPassword.setError("Vui lòng nhập dữ liệu!!!");
+                    test=false;
                 }
-                Intent intent= new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(intent);
+                if (test==true) {
+                    DangNhap();
+                }
             }
         });
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+
+
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(SignInActivity.this, SignUpActivity.class);
+                Intent intent=new Intent(SignInActivity.this,SignUpActivity.class);
                 startActivity(intent);
             }
         });
+    }
+    private void DangNhap()
+    {
+        firebaseAuth.signInWithEmailAndPassword(editTextEmail.getText().toString(),editTextPassword.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful())
+                        {
+                            Intent intent=new Intent(SignInActivity.this,MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            editTextEmail.setError("Tài khoản không tồn tại!!!");
+                            editTextPassword.setText("");
+                        }
+
+                    }
+                });
     }
 }

@@ -40,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/topfood" />
         </com.google.android.material.tabs.TabLayout>
-
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="0dp"

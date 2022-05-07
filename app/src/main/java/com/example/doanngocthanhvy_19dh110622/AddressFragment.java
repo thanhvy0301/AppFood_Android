@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -13,13 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.location.Location;
-import android.location.LocationListener;
-import com.example.doanngocthanhvy_19dh110622.LocationServiceTask;
-import com.example.doanngocthanhvy_19dh110622.PermissionTask;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.api.Context;
 
 
 /**
@@ -32,7 +29,6 @@ public class AddressFragment extends Fragment {
     TextInputEditText tvAddress, tvMobile;
     Button btnNext;
     NavController navController;
-
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,7 +78,7 @@ public class AddressFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
@@ -101,9 +97,7 @@ public class AddressFragment extends Fragment {
 
             navController.navigate(R.id.action_addressFragment_to_usernamePasswordFragment, bundle);
         });
-
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -117,9 +111,6 @@ public class AddressFragment extends Fragment {
         }
     }
 
-    private void getLastLocation(FragmentActivity activity) {
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PermissionTask.LOCATION_SERVICE_REQUEST_CODE && grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -128,7 +119,8 @@ public class AddressFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void getLastLocation(Context context) {
+    public void getLastLocation(FragmentActivity context) {
 
     }
+
 }
