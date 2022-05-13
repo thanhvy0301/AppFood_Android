@@ -87,7 +87,7 @@ public class    RestaurantDetailActivity extends AppCompatActivity implements
                     tvAddress.setText(restaurant.address);
                     tvOpenHours.setText(restaurant.getOpenHours());
                     StorageReference profileRef =
-                            fStorage.getReference().child("restaurants/covers"+ restaurant.getCover());
+                            fStorage.getReference().child("restaurants/cover"+ restaurant.getCover());
                     profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -108,7 +108,7 @@ public class    RestaurantDetailActivity extends AppCompatActivity implements
             tvAddress.setText(restaurant.getAddress());
             tvOpenHours.setText(restaurant.getOpenHours());
             Log.d("IJK", restaurant.getCover());
-            StorageReference profileRef = fStorage.getReference().child("restaurants/covers/"+ restaurant.getCover());
+            StorageReference profileRef = fStorage.getReference().child("restaurants/covers/cover_menu_1"+ restaurant.getCover());
             profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {

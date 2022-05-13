@@ -93,19 +93,20 @@
 
 
         </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPlaceOrder"
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:layout_marginTop="@dimen/mediumSpace"
             android:background="@drawable/bg_green_button"
-            android:text="@string/checkout"
             android:padding="@dimen/mediumSpace"
+            android:text="@string/checkout"
             android:textAllCaps="false"
-            android:textSize="@dimen/mediumFontSize"
             android:textColor="@color/colorWhite"
-            android:layout_alignParentBottom="true"/>
+            android:textSize="@dimen/mediumFontSize" />
 
     </RelativeLayout>
 

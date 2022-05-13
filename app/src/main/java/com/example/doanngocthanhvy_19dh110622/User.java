@@ -3,19 +3,30 @@ package com.example.doanngocthanhvy_19dh110622;
 import java.io.Serializable;
 
 public class User implements Serializable {
+
     String id;
     String firstname, lastname, email, address, mobile;
+    Double latitude;
+    Double longitude;
+    String userID;
 
     public User(){ }
-
-    public User(String id,String firstname, String lastname, String email, String address, String latitude, String longitude, String mobile) {
+    public User(String id, String firstname, String lastname, String email, String address, Double latitude, Double longitude, String mobile) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.address = address;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.mobile = mobile;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -50,21 +61,21 @@ public class User implements Serializable {
         this.address = address;
     }
 
-//    public String getLatitude() {
-//        return latitude;
-//    }
-//
-//    public void setLatitude(String latitude) {
-//        this.latitude = latitude;
-//    }
-//
-//    public String getLongitude() {
-//        return longitude;
-//    }
-//
-//    public void setLongitude(String longitude) {
-//        this.longitude = longitude;
-//    }
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
     public String getMobile() {
         return mobile;
@@ -81,10 +92,21 @@ public class User implements Serializable {
                 ", lastName='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-//                ", latitude='" + latitude + '\'' +
-//                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
                 ", mobile='" + mobile + '\'' +
                 '}';
     }
 
+    public void setUserID(String userID) {
+        this.id = userID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+//    public void setUserID(String userID) {
+//        this.id = id;
+//    }
 }

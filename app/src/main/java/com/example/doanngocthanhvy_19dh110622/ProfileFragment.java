@@ -108,12 +108,8 @@ public class ProfileFragment extends Fragment {
         email=view.findViewById(R.id.et_Email);
         phone=view.findViewById(R.id.et_Mobile);
         address=view.findViewById(R.id.et_Address);
-
-
-
         btnUpdate=view.findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Map<String,Object> user=new HashMap<>();
@@ -122,7 +118,9 @@ public class ProfileFragment extends Fragment {
                 user.put("lastname",nAmE[1]);
                 user.put("mobile",phone.getText().toString());
                 user.put("address",address.getText().toString());
-                FirebaseDatabase.getInstance().getReference().child("users").child(id).updateChildren(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                //Toast.makeText(getContext(),FirebaseDatabase.getInstance().getReference().child("users").child(id).toString(),Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("users").child(id)
+                        .updateChildren(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(getContext(),"OKK",Toast.LENGTH_SHORT).show();
@@ -131,11 +129,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getContext(),"Failed",Toast.LENGTH_SHORT).show();
-
                     }
                 });
-
-
             }
         });
         btnChangePass=view.findViewById(R.id.btnChangePassword);
@@ -165,8 +160,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user=snapshot.getValue(User.class);
-
-                name.setText(user.getFirstName() + user.getLastName());
+                name.setText(user.getFirstName() + " " + user.getLastName());
                 email.setText(user.getEmail());
                 phone.setText(user.getMobile());
                 address.setText(user.getAddress());

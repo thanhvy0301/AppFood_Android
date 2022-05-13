@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -14,6 +15,8 @@ import androidx.navigation.ui.NavigationUI;
 //
 //import com.google.android.gms.tasks.OnFailureListener;
 //import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
 import android.content.ClipData;
@@ -22,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,14 +42,31 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
-    TextView tvName, tvEmail;
-    FirebaseUser fUser;
-    DatabaseReference reference;
+
+    TextView textCartItemCount;
+    int mCartItemCount = 0;
+    App app;
+    Menu mMenu;
+    boolean flag = true;
+    CarRepository cartRepository;
+    FirebaseDatabase fDatabase;
+    FirebaseAuth fAuth;
+
+    TextView tvFullName, tvEmail;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         fDatabase= FirebaseDatabase.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+
+//        app = (App) getApplication();
+//        cartRepository = new CarRepository(getApplication());
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView = findViewById(R.id.navView);
         View header = navigationView.getHeaderView(0);
-        tvName = header.findViewById(R.id.tvFullName);
+        tvFullName = header.findViewById(R.id.tvFullName);
         tvEmail = header.findViewById(R.id.tvEmail);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,
@@ -71,20 +93,50 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+//        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+//            @Override
+//            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination destination, @Nullable Bundle bundle) {
+//                if (destination.getId() == R.id.profileFragment) {
+//                    mMenu.findItem(R.id.mnucart).setVisible(false);
+//                } else if (mMenu != null) {
+//                    mMenu.findItem(R.id.mnucart).setVisible(true);
+//                }
+//            }
+//        });
+        View view = navigationView.getHeaderView(0);
+        tvFullName = view.findViewById(R.id.tvFullName);
+        tvEmail = view.findViewById(R.id.tvEmail);
 
-        fUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("users").child(fUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                tvName.setText(user.getFirstName()+" "+user.getLastName()+" ");
-                tvEmail.setText(user.getEmail());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        String userID = fAuth.getCurrentUser().getUid();
 
-            }
-        });
+        fDatabase.getReference().child("users").child(userID).get()
+                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        user.setUserID(userID);
+                        tvFullName.setText(user.getFirstName() + " " + user.getLastName());
+                        tvEmail.setText(user.getEmail());
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
     }
 }

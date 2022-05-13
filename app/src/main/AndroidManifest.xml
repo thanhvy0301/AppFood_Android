@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.doanngocthanhvy_19dh110622" >
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyApp" >
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCQEzFpRS0kdHEDv9CClXluIADN60XeEnM"/>
         <activity
             android:name=".RestaurantDetailActivity"
             android:exported="false" />
@@ -21,6 +24,8 @@
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />
+        <activity android:name=".OrderActivity"
+            android:exported="false"/>
         <activity
             android:name=".WellcomeActivity"
             android:exported="true" >
@@ -34,6 +39,7 @@
             android:name=".SignUpActivity"
             android:exported="true" />
         <activity android:name=".MainActivity" />
+<!--        <activity android:name=".OrderActivity" />-->
     </application>
 
 </manifest>
