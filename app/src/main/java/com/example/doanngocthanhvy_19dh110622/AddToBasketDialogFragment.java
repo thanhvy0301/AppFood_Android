@@ -102,6 +102,7 @@ public class AddToBasketDialogFragment extends DialogFragment implements
         tvPrice.setText(food.getPrice() + " VND");
         updateStats();
 //        app = (App) getActivity().getApplication();
+        tvQuantity.setText("1");
 
     }
 

@@ -20,10 +20,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +39,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
     NavController navController;
     AppBarConfiguration appBarConfiguration;
@@ -42,19 +48,15 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
-
     TextView textCartItemCount;
     int mCartItemCount = 0;
     App app;
     Menu mMenu;
-    boolean flag = true;
     CarRepository cartRepository;
+    boolean flag=true;
     FirebaseDatabase fDatabase;
     FirebaseAuth fAuth;
-
     TextView tvFullName, tvEmail;
-
-
 
 
     @Override
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         fDatabase= FirebaseDatabase.getInstance();
+        fDatabase = FirebaseDatabase.getInstance();
         fAuth = FirebaseAuth.getInstance();
 
 //        app = (App) getApplication();
@@ -71,11 +73,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawerLayout);
-
         navigationView = findViewById(R.id.navView);
-        View header = navigationView.getHeaderView(0);
-        tvFullName = header.findViewById(R.id.tvFullName);
-        tvEmail = header.findViewById(R.id.tvEmail);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,
                 drawer,
@@ -86,10 +84,9 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(actionBarDrawerToggle);
 
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment, R.id.orderFragment, R.id.profileFragment, R.id.logoutFragment)
+                R.id.homeFragment, R.id.orderFragment, R.id.profileFragment)
                 .setDrawerLayout(drawer)
                 .build();
-
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -126,8 +123,25 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        try {
+//            mCartItemCount = cartRepository.getCountCart();
+//            setupBadge();
+//            Log.d("ABC", mCartItemCount+" ");
+//        } catch (ExecutionException e) {
+//            Log.d("ABC", e.getMessage());
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            Log.d("ABC", e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
@@ -139,4 +153,52 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.cart_menu, menu);
+//        mMenu = menu;
+//
+//
+//        View actionView = mMenu.findItem(R.id.mnucart).getActionView();
+//        textCartItemCount = actionView.findViewById(R.id.cart_badge);
+//
+//        setupBadge();
+//
+//        actionView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onOptionsItemSelected(mMenu.findItem(R.id.mnucart));
+//            }
+//        });
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.mnucart) {
+            Intent intent = new Intent(this, OrderActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+//    private void setupBadge() {
+//        if (textCartItemCount != null) {
+//            if (mCartItemCount == 0) {
+//                if (textCartItemCount.getVisibility() != View.GONE) {
+//                    textCartItemCount.setVisibility(View.GONE);
+//                }
+//            } else {
+//                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+//                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+//                    textCartItemCount.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//        }
+//    }
 }

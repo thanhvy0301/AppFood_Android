@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 
 public class OrderActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private TextView tvTotal, tvName, tvAddress;
+    private TextView tvTotal, tvName, tvAddress, tvMobile;
     private RecyclerView rvFoods;
     private Basket basket;
     private FoodBasketAdapter adapter;
@@ -50,6 +50,7 @@ public class OrderActivity extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        tvMobile = findViewById(R.id.tvMobile);
         tvAddress = findViewById(R.id.tvAddress);
         tvName = findViewById(R.id.tvName);
         fAuth = FirebaseAuth.getInstance();
@@ -68,6 +69,7 @@ public class OrderActivity extends AppCompatActivity implements OnMapReadyCallba
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngUser, 16));
                         tvName.setText("Name: " + user.getFirstName() + " " + user.getLastName());
                         tvAddress.setText("Address: " + user.getEmail());
+                        tvMobile.setText("Mobile: " + user.getMobile());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

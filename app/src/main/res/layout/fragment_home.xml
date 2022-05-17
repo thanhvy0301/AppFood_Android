@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,12 +13,13 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tabTextAppearance="@style/MineCustomTabText"
             app:tabGravity="center"
-            app:tabMode="fixed">
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/MineCustomTabText">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabRestaurant"
@@ -40,15 +39,19 @@
                 android:layout_height="wrap_content"
                 android:text="@string/topfood" />
         </com.google.android.material.tabs.TabLayout>
-        <FrameLayout
-            android:id="@+id/content"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout">
-        </FrameLayout>
+
+<!--        <FrameLayout-->
+<!--            android:id="@+id/content"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tabLayout"-->
+<!--            app:layout_constraintVertical_bias="1.0">-->
+
+<!--        </FrameLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
